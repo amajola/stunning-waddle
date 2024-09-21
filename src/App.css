@@ -1,0 +1,11 @@
+.grow-button:hover:active {
+  transform: scale(0.9);
+}
+
+.grow-button:hover {
+  transform: scale(1.1);
+}
+
+.header {
+  @apply shadow-[0px_5px_15px_0px_#00000024] border-2 border-solid border-border-grey absolute -right-3 top-6 lg:min-w-[500px] flex-col items-center gap-5 py-5 min-w-[90dvw] bg-white;
+}
