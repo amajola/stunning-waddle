@@ -1,50 +1,63 @@
-# React + TypeScript + Vite
+# E-commerce Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an e-commerce web application built with React and TypeScript, using Bun as the JavaScript runtime and package manager.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Business information banner
+- Header component
+- Footer component
+- Product information banner
+- Responsive design
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+- Bun (latest version)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+To install Bun, run:
+
+```
+curl -fsSL https://bun.sh/install | bash
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/your-repo-name.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd your-repo-name
+   ```
+3. Install dependencies:
+   ```
+   bun install
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## Usage
+
+To start the development server:
+
 ```
+bun run dev
+```
+
+This will start the application in development mode. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+## Project Structure
+
+- `src/components/`: Contains React components (BusinessInfoBanner, Header, Products, ProductInfoBanner, Footer)
+- `src/assets/`: Stores static assets like images
+- `src/api/`: Contains API integration code
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- `bun run dev`: Runs the app in development mode
+- `bun run build`: Builds the app for production
+- `bun run lint`: Lints the project files
+- `bun run preview`: Previews the built app
