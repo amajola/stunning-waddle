@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import BasketIcon from "../assets/BasketIcon";
 import CloseIcon from "../assets/CloseIcon";
 import CompanyLogo from "../assets/CompanyLogo";
@@ -13,6 +13,17 @@ function Header() {
   const [showCart, setShowCart] = useState(false);
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch<AppDispatch>();
+
+  const cartTotal = useMemo(
+    () =>
+      cartItems
+        .reduce(
+          (reducer, element) => element.price * element.quantity + reducer,
+          0
+        )
+        .toFixed(2),
+    [cartItems]
+  );
 
   const handleRemoveFromCart = (product: CartItem) => {
     dispatch(removeFromCart(product.id));
@@ -48,6 +59,7 @@ function Header() {
         </div>
         <div className="relative inline-flex items-center">
           <button
+          className="w-10 h-10"
             onClick={() => {
               setShowCart(!showCart);
             }}
@@ -95,7 +107,6 @@ function Header() {
                   <button
                     className="w-5 h-5 rounded-full self-start"
                     onClick={() => {
-                      console.log("Asimthande Majola");
                       handleRemoveFromCart(element);
                     }}
                   >
@@ -109,16 +120,11 @@ function Header() {
               <p className="font-semibold font-poppins">
                 <MarkdownText text="_Subtotal:_" />
               </p>
-              <p className="font-poppins font-semibold">
-                $
-                {cartItems
-                  .reduce((reducer, element) => element.price * element.quantity + reducer, 0)
-                  .toFixed(2)}
-              </p>
+              <p className="font-poppins font-semibold">${cartTotal}</p>
             </div>
           </div>
 
-          <div className="absolute left-4 bottom-3 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs md:w-5 md:h-5">
+          <div className="absolute left-4 top-0 bottom-3 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs md:w-5 md:h-5">
             <p className="text-white text-[0.60rem] md:text-[0.8em]">
               {numProducts}
             </p>

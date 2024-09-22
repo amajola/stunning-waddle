@@ -39,7 +39,6 @@ export const productsApi = createApi({
     fetchProducts: builder.query<ProductInterface[], ProductAPIInterface>({
       query: ({ category, sort = "asc", limit = 20 }) => {
         const params = new URLSearchParams();
-        console.log("Aiosmtjdas", sort, limit);
         if (sort) params.append("sort", sort);
         if (limit) params.append("limit", limit.toString());
 

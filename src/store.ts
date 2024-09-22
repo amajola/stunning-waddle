@@ -11,10 +11,12 @@ export interface CartItem extends ProductInterface {
 
 export interface CartState {
   items: CartItem[];
+  showToasty: boolean;
 }
 
 const initialState: CartState = {
   items: [],
+  showToasty: false,
 };
 
 const initialScrollState: { enabled: boolean } = {
@@ -46,7 +48,7 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
-      const index = state.items.findIndex(item => item.id === action.payload);
+      const index = state.items.findIndex((item) => item.id === action.payload);
       if (index !== -1) {
         state.items.splice(index, 1);
       }
@@ -66,7 +68,7 @@ export const store = configureStore({
     scroll: scrollSlice.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
   },
-  
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

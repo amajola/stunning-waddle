@@ -13,6 +13,8 @@ import { addToCart, AppDispatch } from "../store";
 import Loader from "./Loader";
 import "../App.css";
 import ErrorScreen from "./Error";
+import { useState } from "react";
+import Toasty from "./Toasty";
 
 interface ProductsDisplayInterface {
   category?: string;
@@ -26,20 +28,38 @@ function Products({ category = "", limit = 20 }: ProductsDisplayInterface) {
     isLoading,
   } = useFetchProductsQuery({ category, limit });
   const dispatch = useDispatch<AppDispatch>();
+  const [toasties, setToasties] = useState<
+    Array<{ id: number; message: string }>
+  >([]);
 
   if (isLoading)
     return (
       <div className="p-10">
-        <Loader size="md" color="blue" />;
+        <Loader size="md" color="blue" />
       </div>
     );
   if (error) return <ErrorScreen />;
   if (!products) return <div>No data</div>;
 
-  console.log(products);
+  const removeToasty = (id: number) => {
+    setToasties((prevToasties) =>
+      prevToasties.filter((toasty) => toasty.id !== id)
+    );
+  };
+
+  const addToasty = (message: string) => {
+    const id = Date.now();
+    setToasties((prevToasties) => [...prevToasties, { id, message }]);
+
+    // Remove toasty after 3 seconds
+    setTimeout(() => {
+      removeToasty(id);
+    }, 3000);
+  };
 
   const handleAddToCart = (product: ProductInterface) => {
     dispatch(addToCart(product));
+    addToasty(`Added ${product.title} to cart!`);
   };
 
   return (
@@ -97,7 +117,7 @@ function Products({ category = "", limit = 20 }: ProductsDisplayInterface) {
                         />
                       </p>
                     </div>
-                    <p>{truncateDescription(element.description, 300)}</p>
+                    <p className="max-h-52 min-h-52">{truncateDescription(element.description, 300)}</p>
                     <div className="flex flex-row justify-between items-center">
                       <p className="text-lg font-semibold">{`$${element.price}`}</p>
                       <button
@@ -112,6 +132,18 @@ function Products({ category = "", limit = 20 }: ProductsDisplayInterface) {
               );
             })}
         </div>
+      </div>
+      <div className="fixed bottom-4 right-4 flex flex-col-reverse">
+        <>
+          {toasties.map((toasty) => (
+            <Toasty
+              key={toasty.id}
+              id={toasty.id}
+              message={toasty.message}
+              onClose={removeToasty}
+            />
+          ))}
+        </>
       </div>
     </>
   );
